@@ -16,8 +16,10 @@ apply from: '../build.common.gradle'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 repositories {
+    maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
     mavenCentral()
 }
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 }
