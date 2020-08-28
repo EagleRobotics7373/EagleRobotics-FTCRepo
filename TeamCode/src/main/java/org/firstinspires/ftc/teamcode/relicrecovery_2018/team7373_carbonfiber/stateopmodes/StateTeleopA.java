@@ -66,24 +66,27 @@ public class StateTeleopA extends OpMode {
 
   // Lift and Grabber
   DcMotor lift;
-  DcMotor spinner;
+//  DcMotor spinner;
   double lastPower = -.15;
-  Servo leftTop;
-  Servo leftBottom;
-  Servo rightTop;
-  Servo rightBottom;
+//  Servo leftTop;
+//  Servo leftBottom;
+//  Servo rightTop;
+//  Servo rightBottom;
 
   // Jewel Manipulator
-  Servo jewelManipulator;
-  Servo jewelRotator;
+//  Servo jewelManipulator;
+//  Servo jewelRotator;
+
+  Servo leftGrabber;
+  Servo rightGrabber;
 
   // Relic Arm System
-  DcMotor threadedRodLift;
-  Servo relicGrabber;
-  Servo slideStop;
-
-  ColorSensor colorSensorLeft;
-  ColorSensor colorSensorRight;
+//  DcMotor threadedRodLift;
+//  Servo relicGrabber;
+//  Servo slideStop;
+//
+//  ColorSensor colorSensorLeft;
+//  ColorSensor colorSensorRight;
 
     BNO055IMU imu;
 
@@ -103,19 +106,9 @@ public class StateTeleopA extends OpMode {
 
 
     lift = hardwareMap.dcMotor.get("lift");
-    spinner = hardwareMap.dcMotor.get("spinner");
-//    leftTop = hardwareMap.servo.get("leftTop");
-//    leftBottom = hardwareMap.servo.get("leftBottom");
-//    rightTop = hardwareMap.servo.get("rightTop");
-//    rightBottom = hardwareMap.servo.get("rightBottom");
 
-
-    jewelManipulator = hardwareMap.servo.get("jewelManipulator");
-    jewelRotator = hardwareMap.servo.get("jewelRotator");
-
-    threadedRodLift = hardwareMap.dcMotor.get("threadedRodLift");
-    relicGrabber = hardwareMap.servo.get("relicGrabber");
-    slideStop = hardwareMap.servo.get("slideStop");
+    leftGrabber = hardwareMap.servo.get("leftGrabber");
+    rightGrabber = hardwareMap.servo.get("rightGrabber");
 
 //      BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 //      parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
@@ -153,51 +146,56 @@ public class StateTeleopA extends OpMode {
    * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
    */
   @Override
-  public void loop(){
+  public void loop() {
     telemetry.addData("Status", "Run Time: " + runtime.toString());
 
     if (gamepad1.left_bumper) {
       lift.setPower(gamepad1.left_stick_y);
-      holonomic.run(0,0,0);
+      holonomic.run(0, 0, 0);
     } else {
 //      lift.setPower(0);
       // Run using cubic and Y reversed
-      holonomic.run(MathOperations.pow(-k*gamepad1.left_stick_y, 3), MathOperations.pow(k*gamepad1.left_stick_x, 3),
-              MathOperations.pow(k*gamepad1.right_stick_x, 3));
+      holonomic.run(MathOperations.pow(-k * gamepad1.left_stick_y, 3), MathOperations.pow(k * gamepad1.left_stick_x, 3),
+              MathOperations.pow(k * gamepad1.right_stick_x, 3));
       holonomic.run(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
       if (gamepad1.left_trigger > 0.03) lift.setPower(-gamepad1.left_trigger);
       else if (gamepad1.right_trigger > 0.03) lift.setPower(gamepad1.right_trigger);
       else lift.setPower(0);
     }
-    if(gamepad1.dpad_left){
-      spinner.setPower(.5);
-      lastPower = .2;
-    } else if(gamepad1.dpad_right){
-      spinner.setPower(-.5);
-      lastPower = -.2;
-    } else {
-      spinner.setPower(lastPower);
-    }
+//    if(gamepad1.dpad_left){
+//      spinner.setPower(.5);
+//      lastPower = .2;
+//    } else if(gamepad1.dpad_right){
+//      spinner.setPower(-.5);
+//      lastPower = -.2;
+//    } else {
+//      spinner.setPower(lastPower);
+//  }
     if (gamepad1.x) {
-      rightTop.setPosition(vars.rightTopClosedNew);
-      leftTop.setPosition(vars.leftTopClosedNew);
-      rightBottom.setPosition(vars.rightBottomClosedNew);
-      leftBottom.setPosition(vars.leftBottomClosedNew);
+//      rightTop.setPosition(vars.rightTopClosedNew);
+//      leftTop.setPosition(vars.leftTopClosedNew);
+//      rightBottom.setPosition(vars.rightBottomClosedNew);
+//      leftBottom.setPosition(vars.leftBottomClosedNew);
+      rightGrabber.setPosition(vars.rightClosed);
+      leftGrabber.setPosition(vars.leftClosed);
+
 
     } else if (gamepad1.y) {
-      rightTop.setPosition(vars.rightTopOpen);
-      leftTop.setPosition(vars.leftTopOpen);
-      rightBottom.setPosition(vars.rightBottomOpen);
-      leftBottom.setPosition(vars.leftBottomOpen);
+//      rightTop.setPosition(vars.rightTopOpen);
+//      leftTop.setPosition(vars.leftTopOpen);
+//      rightBottom.setPosition(vars.rightBottomOpen);
+//      leftBottom.setPosition(vars.leftBottomOpen);
+      rightGrabber.setPosition(vars.rightOpen);
+      leftGrabber.setPosition(vars.leftOpen);
     }
 
     // Run the Intake
-    spinner.setPower(lastPower);
+//    spinner.setPower(lastPower);
 
-    jewelManipulator.setPosition(vars.jewelManipulatorStoredPosition);
-    jewelRotator.setPosition(vars.jewelRotatorStoredPosition);
-    threadedRodLift.setPower(0);
+//    jewelManipulator.setPosition(vars.jewelManipulatorStoredPosition);
+//    jewelRotator.setPosition(vars.jewelRotatorStoredPosition);
+//    threadedRodLift.setPower(0);
     // Relic Grabber
 
 //    if(gamepad2.y && gamepad1.y)

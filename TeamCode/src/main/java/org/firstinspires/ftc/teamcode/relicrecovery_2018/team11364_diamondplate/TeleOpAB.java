@@ -2,15 +2,19 @@ package org.firstinspires.ftc.teamcode.relicrecovery_2018.team11364_diamondplate
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.toolkit.MusicPlayer;
+
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Relic Recovery 11364 AB", group="2018")
 public class TeleOpAB extends OpMode {
     Robot robot;
     double pFactor;
     double grabberPosition = 0.183;
     double spoolPower;
+    MusicPlayer player;
 
     @Override
     public void init() {
+        player = new MusicPlayer(hardwareMap, false);
         robot = new Robot(hardwareMap);
         robot.servo_jewel2.setPosition(0.45);
         robot.servo_jewel1.setPosition(0.34);
@@ -20,7 +24,8 @@ public class TeleOpAB extends OpMode {
     public void loop() {
         if (gamepad1.right_bumper) pFactor = 0.4;
         else pFactor = 1.0;
-
+        if (gamepad1.x) player.play();
+        else if (gamepad1.y) player.pause();
         if (gamepad2.x) robot.motor_grab.setPower(-0.5);
         else if (gamepad2.b) robot.motor_grab.setPower(0.5);
         else robot.motor_grab.setPower(0.0);

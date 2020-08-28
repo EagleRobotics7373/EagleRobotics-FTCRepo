@@ -41,8 +41,10 @@ public class GlobalVarsState {
     public double rightBottomClosedNew = 0.4;
     public double rightBottomOpen = 0;
 
-    public double leftClosed = 0.0;
-    public double rightClosed = 0.0;
+    public double leftClosed = 0.520;
+    public double leftOpen = 0.278; //or 0.12
+    public double rightOpen = 0.69;
+    public double rightClosed = 0.47;
 
 
     public GlobalVarsState(){
